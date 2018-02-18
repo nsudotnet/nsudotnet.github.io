@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    <title>NSU .NET  | &#x417;&#x430;&#x434;&#x430;&#x447;&#x438; | Perlin</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Спецкурс C# и .NET в НГУ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/manual.html">GitHub-мануал</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/tasks/index.html">Задачи</a>
+            </li>
+        </ul>
+    </div>
+</nav><div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-10">
+                <div class="row">
+    <div class="col-12">
+        <h1>&#x413;&#x435;&#x43D;&#x435;&#x440;&#x430;&#x442;&#x43E;&#x440; &#x448;&#x443;&#x43C;&#x43E;&#x432; &#x41F;&#x435;&#x440;&#x43B;&#x438;&#x43D;&#x430;</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <table class="table table-condensed table-bordered">
+            <tbody>
+              
+            <tr>
+                <td><b>Название</b></td>
+                <td>Perlin</td>
+            </tr>
+            <tr>
+                <td><b>Баллы</b></td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td><b>Командная?</b></td>
+                <td>
+                        <span class="text-success" title="Эту задачу можно делать в команде">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                </td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+    <div class="col-9">
+<p>Очевидно, вам придется писать генератор двумерных шумов Перлина. Задача весьма творческая и интересная. Результирующая программа будет выдавать изображения, похожие на галлюцинации коня во время приема LSD. За консольную версию программы вы получите <em>6</em> баллов, а за усложненную - <em>9</em>.</p>
+<h2>Как это устроено</h2>
+<p>Данная нам графическая плоскость разделяется на 3-4 сетки, по принципу – каждая следующая сетка с вдвое меньшим шагом, чем предыдущая:</p>
+<p><img src="https://raw.githubusercontent.com/nsudotnet/nsudotnet.github.io/master/grid.png" alt="Сетка" /></p>
+<p>Ну вот примерно как-то так</p>
+<p>В узлах каждой сетки проставляются произвольные значения (абсолютно произвольные), между узлами для каждой сетки отдельно делается билинейная (для наилучших результатов рекомендуется бикубическая интерполяция). Чтобы определить цвет точки (x,y) – складываются 3 интерполированных значения от каждой сетки в этой точке с разными коэффициентами (калибруется в процессе):</p>
+<p><code>Color(x,y) = a*Grid1Color(x,y) + b*Grid2Color(x,y) + c*Grid3Color(x,y)</code></p>
+<p>Чтобы сделать цветную картинку, нужно просто проделать эту операцию для каждого из 3х цветов (R,G,B). Для простоты работать мы будем с квадратной сеткой</p>
+<p>Пример использования:</p>
+<p>Запуск <code>lsd.exe 256 image.bmp</code> – думает и выдает image.bmp, размером 256х256 пикселей, содержащий построенную указанным путем картинку</p>
+<h2>Подсказки</h2>
+<ul>
+<li>Для удобства лучше сделать класс Grid с конструктором от размеров требуемого изображения и «порядка» разбиения</li>
+<li>У класса Grid можно сделать метод GetColor(x,y) выдающий float-значение интенсивности цвета в заданной точке. Потом эти значения удобно будет складывать. Для каждого цвета создать свой экземпляр Grid</li>
+<li>Если значение интенсивности получилось меньше 0 – то урезаем до 0. Если больше 255, то урезаем до 255.</li>
+<li>Random.Next(50,255) дает более-менее адекватные результаты
+Для рисования на виртуальных холстах хорошо подходит класс <code>System.Drawing.Bitmap</code></li>
+</ul>
+<h2>Усложнение</h2>
+<p>Усложненная версия задания подразумевает:</p>
+<ol>
+<li>Обертку для класса Grid, совмещающую в себе 3 сетки – по одной на каждый цвет</li>
+<li>Возможность для обертки задавать так называемый TurnColor – цвет, который покомпонентно перемножаться с тем, который был получен из каждой сетки. Только после этой операции сетку стоит нормировать на 0-255 и отрезать лишнее.</li>
+<li>Интерфейс IKnotValuePlacer, который будет подаваться на вход классу сетки и будет задавать способ разместить точки на сетке не в произвольном порядке, а как-нибудь закономерно</li>
+<li>Добиться того, чтобы в main осталось только задание гармоник, TurnColor-ов и KnotValuePlacer-ов для составления шумов. Всю остальную функциональность – в том числе и по генерации конечного изображения в Bitmap необходимо вынести в отдельный класс</li>
+<li>Долго экспериментировать с гармониками, чтобы понять их природу и попытаться сделать что-нибудь осмысленное</li>
+<li>Наколбасить WPF-фронтенд для генератора шумов, потому что вручную задавать гармоники через код и пересобирать приложение – муторно. Не работайте с WPF напрямую – ознакомьтесь с MVVM-фреймворком <a href="https://caliburnmicro.com/">Caliburn.Micro</a>.</li>
+</ol>
+
+    </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
