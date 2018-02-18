@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    <title>NSU .NET  | GitHub</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Спецкурс C# и .NET в НГУ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/manual.html">GitHub-мануал</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/tasks/index.html">Задачи</a>
+            </li>
+        </ul>
+    </div>
+</nav><div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-10">
+            
+<div class="row">
+    <div class="col-12">
+<h1>Что и почему?</h1>
+<p>Предыдущие годы курса показали, что чаще всего в почте преподавателя из студенческих работ формируется монолитная каша, разгрести которую с каждой неделей все труднее и труднее. По сему, мы долго думали и решили профилактики для и пользы ради перенести сдачу кода задач на проверку в <a href="https://github.com">github</a>.</p>
+<p>Таким образом, задачи на e-mail не принимаются и приниматься не будут - нечего почту почем зря захламлять. Все задания мы делаем на github, в публичных репозиториях.</p>
+<p>Клиенты для git изначально были консольными и отличались своим странноватым синтаксисом и логикой работы мерджей. Сейчас уже появилось множество графических фронтендов - <a href="https://code.google.com/p/tortoisegit/">TortoiseGit</a>, <a href="http://msysgit.github.io/">mysysgit</a>, <a href="https://desktop.github.com/">Windows Github</a> (специально для github). Не смотря на рекомендуемый способ - коммитить задачи через Windows Github, у вас все еще остается возможность пользоваться github-ом через консоль как вам заблагорассудится - главное чтобы код был в итоге в репозитории. На мой вкус - windows github проще, понятнее и быстрее - вы сэкономите кучу времени на разбирательства с консольными командами git. Страждущих же я предупредил, и на всякий случай оставляю тут полезные ссылки:</p>
+<ul>
+<li><a href="https://www.kernel.org/pub/software/scm/git/docs/user-manual.html">man git</a></li>
+<li><a href="http://habrahabr.ru/post/68341/">Помощь переезжающим на git с SVN</a></li>
+<li><a href="http://gitref.org/">The Git Reference</a></li>
+</ul>
+<p>В ходе проверки заданий мы не используем почту для общения со студентами - мы используем Issues гитхаба, чтобы указать на ошибки и развернуть дискуссию. Разумеется, оставлять ответы надо в комментариях к соответствующим Issues, а не использовать для этого почту.</p>
+<h1>Начало работы</h1>
+<ol>
+<li>Идем на github.com, регистрируемся.</li>
+<li>После регистрации и входа, тыкаем в правом верхнем углу по иконке гаечного ключа и отвертки. В открывшемся окне Profile вписываем свое имя и фамилию, жмем Update profile</li>
+<li>Тыкаем по своему логину в правом верхнем углу, выбираем вкладку Repositories, нажимаем &quot;+New&quot;. Вводим Repository name: &quot;nsudotnet&quot;; в списке &quot;Add .gitignore&quot; выбираем Visual Studio. 1. 1. Нажимаем &quot;Create repository&quot;</li>
+<li>Для windows-пользователей:
+<ul>
+<li>Идем на оф. сайт mysysgit, жмем Download.</li>
+<li>В списке релизов выбираем последний (самый верхний). Скачиваем-ставим, оставляя все галочки по умолчанию.</li>
+<li>Идем на оф. сайт Windows Github, жмем Download Github for Windows, качаем, ставим</li>
+<li>Запускаем Windows Github, вводим свой логин-пароль на гитхабе, выбираем папку для репозиториев. Жмем Save.</li>
+<li>Ждем пока прогрузится информация с сервера. Выбираем в списке репозиториев &quot;nsudotnet&quot;, жмем &quot;Clone&quot;</li>
+<li>Готово! Теперь в папке nsudotnet, которая лежит в папке с репозиториями - можете писать код. (для краткости ниже эта папка будет называться nsudotnet)</li>
+<li>Пожалуйста, кладите каждую задачу в новую подпапку nsudotnet! Вместе с .sln-файлом! А то проверять неудобно</li>
+</ul>
+</li>
+<li>Для nix-пользователей:
+<ul>
+<li>А что nix-пользователи делают на курсе программирования для windows?</li>
+</ul>
+</li>
+<li>Находим на гитхабе аккаунт лектора черных лекций: pavel-b-novikov, нажимаем справа сверху кнопочку Follow.</li>
+<li>?????</li>
+<li>PROFIT!</li>
+</ol>
+<h1>Коммиты</h1>
+<p>Тут все просто.</p>
+<ol>
+<li>Чтобы начать новую задачу - заходите в nsudotnet, создаете там новую подпапку. Называете ее следующим образом: ФамилиТранслитом.Nsudotnet.ТехническоеИмяЗадачи. Да, то самое техническое имя из таблицы с задачами. Не придумывайте своего - я вашу задачу не увижу!</li>
+<li>Например: Ivanov.Nsudotnet.JsonSerializer.</li>
+<li>В студии создаете Solution и проект с таким же именем. В настройках местоположения ставите созданную на предыдущем шаге папку, убираете галочку &quot;Create directory for solution&quot;</li>
+<li>Пишете код</li>
+<li>Запускаете windows github, выбираете ваш репозиторий (nsudotnet, на скриншоте по-другому)</li>
+<li>Разворачиваете вкладку Changes</li>
+<li>Вводите комментарии к вашему коммиту , нажимаете Commit to master</li>
+<li>Нажимаете кнопку &quot;Sync&quot;</li>
+<li>?????</li>
+<li>COMMITED!</li>
+<li>Отправляете преподавателю по почте ([pavel.b.novikov@gmail.com]) ссылку на ваш репозиторий на гитхабе</li>
+<li>При получении ответных комментариев от преподавателя — вносите необходимые изменения в код</li>
+<li>Повторяйте шаги 4-12, пока задача не будет сдана</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/nsudotnet/nsudotnet.github.io/master/gh-1.png" alt="GitHub" /></p>
+<p>Выбор репозитория</p>
+<p><img src="https://raw.githubusercontent.com/nsudotnet/nsudotnet.github.io/master/gh-2.png" alt="GitHub" /></p>
+<p>Вкладка &quot;uncommited changes&quot;</p>
+<p><img src="https://raw.githubusercontent.com/nsudotnet/nsudotnet.github.io/master/gh-3.png" alt="GitHub" /></p>
+<p>Комментарий и коммит</p>
+<p><img src="https://raw.githubusercontent.com/nsudotnet/nsudotnet.github.io/master/gh-4.png" alt="GitHub" /></p>
+<p>Синхронизация</p>
+
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
