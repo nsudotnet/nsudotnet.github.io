@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.11.0/themes/prism-okaidia.min.css" />
+    <title>NSU .NET  | &#x417;&#x430;&#x434;&#x430;&#x447;&#x438; | Jsecond</title>
+    
+    
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Спецкурс C# и .NET в НГУ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/manual.html">GitHub-мануал</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/tasks/index.html">Задачи</a>
+            </li>
+        </ul>
+    </div>
+</nav><div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-10">
+                <div class="row">
+    <div class="col-12">
+        <h1>&#x41F;&#x440;&#x435;&#x43E;&#x431;&#x440;&#x430;&#x437;&#x43E;&#x432;&#x430;&#x442;&#x435;&#x43B;&#x44C; C# &#x432; JavaScript</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <table class="table table-condensed table-bordered">
+            <tbody>
+              
+            <tr>
+                <td><b>Название</b></td>
+                <td>Jsecond</td>
+            </tr>
+            <tr>
+                <td><b>Баллы</b></td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td><b>Командная?</b></td>
+                <td>
+                        <span class="text-danger" title="Эту задачу нельзя делать в команде">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                </td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+    <div class="col-9">
+<p>Заставлять студентов писать полноценный транслятор из C# в JavaScript - кощунство. А вот использовать <a href="https://msdn.microsoft.com/ru-ru/library/system.linq.expressions.expressionvisitor.aspx">ExpressionVisitor</a> и встроенные в C# <a href="https://docs.microsoft.com/ru-ru/dotnet/csharp/programming-guide/concepts/expression-trees/">деревья выражений</a> - вполне себе хорошая идея.</p>
+<p>В рамках данного задания вам нужно реализовать простенькое <a href="https://ru.wikipedia.org/wiki/%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D0%BE%D0%B5_%D1%81%D0%B8%D0%BD%D1%82%D0%B0%D0%BA%D1%81%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BE">AST</a>, используя ExpressionVisitor и ваши личные madskillz работы со стеком применить это всё добро для перевода шарповых лямбда-выражений в JavaScript-функции. Не пугайтесь, эта задача не требует от вас знания JavaScript более, чем необходимо для создания web-странички о вас и вашей собаке. Чтобы вы не мучались архитектурными вопросами, я приведу пример как это должно выглядеть. Итак, вам надо сделать несколько классов <code>Js</code>, с разным числом тип-параметров (до 8 будет достаточно) и единственным методом - <code>Function</code>, чтобы его можно было использовать вот так:</p>
+<pre><code class="language-csharp">// Пусть у нас есть класс User, declared as follows
+class User
+{
+    public int Age { get; set; }
+    public string Name { get; set; }
+    public decimal? Balance { get; set; }
+    public Gender Gender { get; set; }
+}
+
+enum Gender { Male, Female }
+
+static void Main(string[] args)
+{
+    // В переменной fn будет готовая к использованию JS-функция
+    // В комментарях я пишу что именно должно быть в этой переменной
+    // Кстати, помимо трансляции выражений надо иметь возможность указывать (опционально) имя функции
+    string fn = null;
+
+    // надо поддерживать все математические операции
+    fn = Js&lt;User&gt;.Function(x =&gt; x.Age + 5);
+    // function(x) { return (x.Age + 5); }
+
+    // Все, я сказал!
+    fn = Js&lt;int, int&gt;.Function((x, y) =&gt; (x % y / 2) &gt;&gt; 5);
+    // function(x,y) { return (((x % y)/2) &gt;&gt; 5); }
+    
+    // И массивы (и словари тоже)
+    fn = Js&lt;User&gt;.Function(x =&gt; x.Name[5]);
+    // function (x) { return (x.Name[5]); }
+    
+    // И про null не забудьте
+    fn = Js&lt;User&gt;.Function(x =&gt; x.Name == null);
+    // function (x) { return (x.Gender == null); }
+
+    // Надо иметь возможность указывать имя функции
+    fn = Js&lt;User&gt;.Function(x =&gt; x.Age &gt; 18, &quot;isAdult&quot;);
+    // function isAdult(x) { return (x.Age &gt; 18); } 
+
+    // Не забудьте про null-coalescing (и про тернарный оператор!)
+    fn = Js&lt;User&gt;.Function(x =&gt; x.Balance ?? 0);
+    // function(x) { return ((x.Balance==null||x.Balance==undefined)?0:(x.Balance)); } 
+
+    // И про new тоже не забудьте (и чтобы Object Initializer поддерживало для строгих типов!)
+    // Для строк - корректно транслировать .Length, .Trim() и .ToUpper() - для задания хватит
+    fn = Js&lt;User&gt;.Function(x =&gt; new {NormalizedAge = x.Age - 18, UpperName = x.Name.ToUpper()});
+    // function(x) { return { NormalizedAge: (x.Age - 18), UpperName = x.Name.toUpperCase() }; }
+}
+</code></pre>
+<h2>Хотите 9 баллов?</h2>
+<p>Не вопрос. Для начала - замыкания. Хинт: самый простой способ обработать замыкания (помимо перехвата анонимных пакованных классов с константами - ну.. вы увидите, когда будете дебажить) - проследить что очередной MemberExpression не строится от одного из параметров выражения. Коль такое встречается - делайте бесконтекстное лямбда-выражение, вызывайте у него <code>.Compile</code> и используйте DynamicInvoke (не реклама, но в <a href="https://habrahabr.ru/post/347820/">моей статье про SQL</a> можно почитать как это делается). Да, ваши замыкания должны распространяться только на простые типы (численные и строки). Если пользователь пытается впихнуть другой объект в замыкание - смело кидайтесь exception-ом.</p>
+<pre><code class="language-csharp">// Надо корректно обрабатывать замыкания
+var yearFrom = DateTime.Today.Year - 18;
+fn = Js&lt;User&gt;.Function(x =&gt; DateTime.Today.Year - x.Age &gt; yearFrom);
+// function (x) { return ((2018 - x.Age) &gt; 2000); }
+
+// И перечисления
+fn = Js&lt;User&gt;.Function(x =&gt; x.Gender == Gender.Female);
+// function (x) { return (x.Gender == 1); }
+</code></pre>
+<p>И - не пугайтесь - простенький LINQ. Даже если у вас не получится сделать LINQ нормально - все равно несите и рассказывайте во что вы уперлись</p>
+<pre><code class="language-csharp">// select и where вместе
+fn = Js&lt;User[], int&gt;.Function((x, age) =&gt; from t in x where t.Age &gt; age select t.Name);
+// function(x,age) { var r = []; for(var i=0;i&lt;x.length;i++) { if (x[i].Age &gt; age) r.push(x[i].Name); } return r; }
+
+// where отдельно 
+fn = Js&lt;User[], int&gt;.Function((x, age) =&gt; x.Where(t =&gt; t.Age &gt; age));
+// function(x,age) { var r = []; for(var i=0;i&lt;x.length;i++) { if (x[i].Age &gt; age) r.push(x[i]); } return r; }
+
+// select отдельно 
+fn = Js&lt;User[]&gt;.Function((x) =&gt; x.Select(t =&gt; t.Name));
+// function(x,age) { var r = []; for(var i=0;i&lt;x.length;i++) { r.push(x[i].Name); } return r; }
+</code></pre>
+
+    </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.11.0/prism.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.11.0/components/prism-csharp.min.js"></script>
+</body>
+</html>
